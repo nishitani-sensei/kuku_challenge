@@ -222,6 +222,37 @@
   .hi-star { font-size: 1.2rem; margin-left: 6px; }
   .no-records { text-align: center; padding: 36px 0; color: #CCC; font-size: 0.9rem; line-height: 1.8; }
 
+  /* ===== TA DIVISION SELECTOR ===== */
+  .ta-div-wrap { display: none; margin-bottom: 4px; }
+  .ta-div-wrap.show { display: block; }
+  .ta-div-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ta-div-btn { padding: 13px 8px; border-radius: 14px; border: 2px solid #C8E4FF; background: white; cursor: pointer; text-align: center; transition: all 0.15s; color: #2277BB; }
+  .ta-div-btn:active { transform: scale(0.96); }
+  .ta-div-btn.on { color: white; box-shadow: 0 3px 0 #2266AA; border-color: transparent; }
+  .ta-div-btn.on.d1 { background:#6BCB77; box-shadow:0 3px 0 #3A8A3A; }
+  .ta-div-btn.on.d2 { background:#FFB347; box-shadow:0 3px 0 #CC7700; }
+  .ta-div-btn.on.d3 { background:#FF6B35; box-shadow:0 3px 0 #C44A18; }
+  .ta-div-btn.on.d4 { background:#9B5DE5; box-shadow:0 3px 0 #6E3AAD; }
+  .ta-div-range { font-size: 0.95rem; font-weight: bold; }
+  .ta-div-sub { font-size: 0.7rem; color: #AAA; margin-top: 2px; }
+  .ta-div-btn.on .ta-div-sub { color: rgba(255,255,255,0.8); }
+
+  /* ===== RESULT EXTRAS ===== */
+  .result-div-tag { display:inline-block; padding:3px 12px; border-radius:20px; font-size:0.8rem; font-weight:bold; margin-bottom:4px; }
+  .new-best-tag { display:inline-block; background:#FFF0E8; color:#FF6B35; border:2px solid #FF6B35; border-radius:12px; padding:5px 16px; font-size:0.9rem; font-weight:bold; margin-bottom:8px; animation:popIn 0.4s ease; }
+
+  /* ===== BEST RECORDS TABLE ===== */
+  .best-rec-wrap { background:white; border-radius:18px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.07); margin-bottom:14px; }
+  .best-rec-row { display:flex; align-items:center; padding:11px 14px; border-bottom:1px solid #F5F0E8; }
+  .best-rec-row:last-child { border-bottom:none; }
+  .br-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-right:10px; }
+  .br-label { font-size:0.85rem; font-weight:bold; color:#444; flex:1; }
+  .br-vals { display:flex; align-items:baseline; }
+  .br-time { font-size:1rem; font-weight:bold; color:#4ECDC4; }
+  .br-rate { font-size:0.75rem; color:#9B5DE5; margin-left:8px; }
+  .br-empty { font-size:0.8rem; color:#CCC; }
+  .br-new { display:inline-block; background:#FFF0E8; color:#FF6B35; border:1.5px solid #FF6B35; border-radius:6px; padding:1px 6px; font-size:0.65rem; font-weight:bold; margin-left:6px; vertical-align:middle; }
+
   /* ===== CONFETTI ===== */
   .confetti-host { position: fixed; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; z-index: 300; overflow: hidden; display: none; }
   .confetti-host.on { display: block; }
@@ -333,18 +364,44 @@
       <div><div class="mode-txt-title">タイムアタックモード</div><div class="mode-txt-sub">20もんをできるだけはやくといてみよう！</div></div>
     </button>
 
-    <div class="section-label">▷ れんしゅうしたい段をえらぼう</div>
-    <div class="dan-grid">
-      <button class="dan-btn" onclick="toggleDan(1)">１の段</button>
-      <button class="dan-btn" onclick="toggleDan(2)">２の段</button>
-      <button class="dan-btn" onclick="toggleDan(3)">３の段</button>
-      <button class="dan-btn" onclick="toggleDan(4)">４の段</button>
-      <button class="dan-btn" onclick="toggleDan(5)">５の段</button>
-      <button class="dan-btn" onclick="toggleDan(6)">６の段</button>
-      <button class="dan-btn" onclick="toggleDan(7)">７の段</button>
-      <button class="dan-btn" onclick="toggleDan(8)">８の段</button>
-      <button class="dan-btn" onclick="toggleDan(9)">９の段</button>
-      <button class="dan-btn dan-mix on" onclick="toggleDan(0)">✨ ぜんぶミックス！</button>
+    <!-- myplace dan selector -->
+    <div id="myplace-dan-wrap">
+      <div class="section-label">▷ れんしゅうしたい段をえらぼう</div>
+      <div class="dan-grid">
+        <button class="dan-btn" onclick="toggleDan(1)">１の段</button>
+        <button class="dan-btn" onclick="toggleDan(2)">２の段</button>
+        <button class="dan-btn" onclick="toggleDan(3)">３の段</button>
+        <button class="dan-btn" onclick="toggleDan(4)">４の段</button>
+        <button class="dan-btn" onclick="toggleDan(5)">５の段</button>
+        <button class="dan-btn" onclick="toggleDan(6)">６の段</button>
+        <button class="dan-btn" onclick="toggleDan(7)">７の段</button>
+        <button class="dan-btn" onclick="toggleDan(8)">８の段</button>
+        <button class="dan-btn" onclick="toggleDan(9)">９の段</button>
+        <button class="dan-btn dan-mix on" onclick="toggleDan(0)">✨ ぜんぶミックス！</button>
+      </div>
+    </div>
+
+    <!-- timeattack division selector -->
+    <div class="ta-div-wrap" id="ta-div-wrap">
+      <div class="section-label">▷ タイムアタックの部門をえらぼう</div>
+      <div class="ta-div-grid">
+        <button class="ta-div-btn d1" id="tdiv-d1" onclick="selectTADiv('d1')">
+          <div class="ta-div-range">１〜３の段</div>
+          <div class="ta-div-sub">やさしい部門</div>
+        </button>
+        <button class="ta-div-btn d2" id="tdiv-d2" onclick="selectTADiv('d2')">
+          <div class="ta-div-range">４〜６の段</div>
+          <div class="ta-div-sub">ちゅうきゅう部門</div>
+        </button>
+        <button class="ta-div-btn d3" id="tdiv-d3" onclick="selectTADiv('d3')">
+          <div class="ta-div-range">７〜９の段</div>
+          <div class="ta-div-sub">上きゅう部門</div>
+        </button>
+        <button class="ta-div-btn d4 on" id="tdiv-d4" onclick="selectTADiv('d4')">
+          <div class="ta-div-range">✨ ぜんぶ</div>
+          <div class="ta-div-sub">ミックス部門</div>
+        </button>
+      </div>
     </div>
 
     <button class="start-btn" onclick="startGame()">▶ スタート！</button>
@@ -392,6 +449,8 @@
   <div class="screen" id="screen-result">
     <div class="result-header">
       <div class="result-badge" id="result-badge">すごい！</div>
+      <div id="result-div-tag"></div>
+      <div id="result-new-best"></div>
       <div class="result-msg" id="result-msg"></div>
     </div>
     <div class="result-cards">
@@ -432,6 +491,9 @@
         <div class="rsc-lbl">へいきん<br>せいかいりつ</div>
       </div>
     </div>
+
+    <div class="rec-section-title">▷ 🏆 タイムアタック 部門別さいこうきろく</div>
+    <div class="best-rec-wrap" id="best-rec-wrap"></div>
 
     <div class="rec-section-title">▷ この月のれんしゅうカレンダー</div>
     <div class="cal-wrap">
@@ -611,10 +673,20 @@ function refreshStreakBar(){
 }
 
 // =====================================================================
+// TA DIVISION CONFIG
+// =====================================================================
+const TA_DIVS = {
+  d1: { label:'１〜３の段', dans:[1,2,3], color:'#6BCB77', shadow:'#3A8A3A' },
+  d2: { label:'４〜６の段', dans:[4,5,6], color:'#FFB347', shadow:'#CC7700' },
+  d3: { label:'７〜９の段', dans:[7,8,9], color:'#FF6B35', shadow:'#C44A18' },
+  d4: { label:'ぜんぶミックス', dans:[1,2,3,4,5,6,7,8,9], color:'#9B5DE5', shadow:'#6E3AAD' },
+};
+
+// =====================================================================
 // GAME STATE
 // =====================================================================
 const G={
-  mode:'myplace', dans:new Set([0]),
+  mode:'myplace', dans:new Set([0]), taDivision:'d4',
   qNum:0, totalQ:10, correct:0, wrongItems:[],
   input:'', curA:0, curB:0, curAns:0,
   answered:false, startMs:0, elapsedSec:0,
@@ -625,6 +697,15 @@ function selectMode(m){
   G.mode=m;
   document.getElementById('btn-myplace').classList.toggle('selected',m==='myplace');
   document.getElementById('btn-timeattack').classList.toggle('selected',m==='timeattack');
+  document.getElementById('myplace-dan-wrap').style.display = m==='myplace' ? '' : 'none';
+  document.getElementById('ta-div-wrap').classList.toggle('show', m==='timeattack');
+}
+
+function selectTADiv(d){
+  G.taDivision=d;
+  Object.keys(TA_DIVS).forEach(k=>{
+    document.getElementById('tdiv-'+k).classList.toggle('on', k===d);
+  });
 }
 
 function toggleDan(d){
@@ -663,7 +744,12 @@ function fmtTime(s){ const m=Math.floor(s/60); return m+':'+String(s%60).padStar
 function ri(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
 
 function genQ(){
-  const pool=G.dans.has(0)?null:[...G.dans];
+  let pool;
+  if(G.mode==='timeattack'){
+    pool=TA_DIVS[G.taDivision].dans;
+  } else {
+    pool=G.dans.has(0)?null:[...G.dans];
+  }
   const a=pool?pool[Math.floor(Math.random()*pool.length)]:ri(1,9);
   return {a, b:ri(1,9)};
 }
@@ -757,20 +843,44 @@ function endGame(){
   document.getElementById('progress-fill').style.width='100%';
   const rate=Math.round(G.correct/G.totalQ*100);
   const wrongCnt=G.wrongItems.length;
+  const isTA=(G.mode==='timeattack');
 
-  // Save
-  let saveMsg='';
+  // Save + check best
+  let saveMsg='', isNewBest=false;
   if(CU){
     const recs=loadRecs(CU.name);
-    const danLabel=G.dans.has(0)?'ぜんぶ':[...G.dans].sort().join(',')+'の段';
-    recs.push({ date:todayStr(), ts:Date.now(), mode:G.mode, dans:danLabel, correct:G.correct, total:G.totalQ, rate, time:G.elapsedSec });
+    const danLabel=isTA ? TA_DIVS[G.taDivision].label
+                        : (G.dans.has(0)?'ぜんぶ':[...G.dans].sort().join(',')+'の段');
+    const rec={ date:todayStr(), ts:Date.now(), mode:G.mode,
+                taDivision: isTA ? G.taDivision : null,
+                dans:danLabel, correct:G.correct, total:G.totalQ, rate, time:G.elapsedSec };
+    // check best for this TA division
+    if(isTA){
+      const prev=recs.filter(r=>r.mode==='timeattack'&&r.taDivision===G.taDivision);
+      const bestTime=prev.length?Math.min(...prev.map(r=>r.time)):null;
+      const bestRate=prev.length?Math.max(...prev.map(r=>r.rate)):null;
+      if(bestTime===null||(rate>=bestRate&&G.elapsedSec<=bestTime)||rate>bestRate) isNewBest=true;
+    }
+    recs.push(rec);
     saveRecs(CU.name, recs);
     refreshStreakBar();
     saveMsg='📊 きろくにほぞんしたよ！';
   }
 
+  // Division tag (timeattack only)
+  const divTagEl=document.getElementById('result-div-tag');
+  const newBestEl=document.getElementById('result-new-best');
+  if(isTA){
+    const div=TA_DIVS[G.taDivision];
+    divTagEl.innerHTML='<span class="result-div-tag" style="background:'+div.color+'22;color:'+div.color+';border:1.5px solid '+div.color+'">🏆 '+div.label+'</span>';
+    newBestEl.innerHTML=isNewBest?'<span class="new-best-tag">🎉 この部門のさいこうきろく更新！</span>':'';
+    if(isNewBest) launchConfetti();
+  } else {
+    divTagEl.innerHTML=''; newBestEl.innerHTML='';
+  }
+
   let bt,bc,msg;
-  if(rate===100){ bt='🎉 かんぺき！';bc='badge-perfect';msg='ぜんもんせいかい！\nほんとうにすごいね！\nこれからもその調子！'; launchConfetti(); }
+  if(rate===100){ bt='🎉 かんぺき！';bc='badge-perfect';msg='ぜんもんせいかい！\nほんとうにすごいね！\nこれからもその調子！'; if(!isNewBest) launchConfetti(); }
   else if(rate>=80){ bt='⭐ すばらしい！';bc='badge-great';msg='とってもよくできたよ！\nちょっとまちがえたところを\nもう一回やってみよう！'; }
   else if(rate>=60){ bt='👍 よくできた！';bc='badge-good';msg='その調子！\nもう少しれんしゅうすると\nもっとうまくなるよ！'; }
   else if(rate>=40){ bt='💪 がんばったね！';bc='badge-ok';msg='チャレンジしたのがえらいね！\nまちがえた問題をもう一度\nやってみよう！'; }
@@ -800,11 +910,39 @@ function endGame(){
 function showRecords(){
   if(!CU) return;
   const recs=loadRecs(CU.name);
+
   // Summary
   document.getElementById('rsc-total').textContent=recs.length;
   const streak=calcStreak(CU.name);
   document.getElementById('rsc-streak').textContent=streak+'🔥';
   document.getElementById('rsc-avg').textContent=recs.length?Math.round(recs.reduce((s,r)=>s+r.rate,0)/recs.length)+'%':'-';
+
+  // Best records by TA division
+  const brWrap=document.getElementById('best-rec-wrap');
+  const taRecs=recs.filter(r=>r.mode==='timeattack');
+  brWrap.innerHTML=Object.entries(TA_DIVS).map(([k,div])=>{
+    const divRecs=taRecs.filter(r=>r.taDivision===k);
+    let inner='';
+    if(divRecs.length){
+      const bestTime=Math.min(...divRecs.map(r=>r.time));
+      const bestRate=Math.max(...divRecs.map(r=>r.rate));
+      // latest run to detect new record
+      const latest=divRecs[divRecs.length-1];
+      const isNewest=(latest.time===bestTime||latest.rate===bestRate)&&(Date.now()-latest.ts<5000);
+      inner='<div class="br-vals">'+
+        '<span class="br-time">'+fmtTime(bestTime)+'</span>'+
+        '<span class="br-rate">'+bestRate+'%</span>'+
+        (isNewest?'<span class="br-new">NEW</span>':'')+
+        '</div>';
+    } else {
+      inner='<span class="br-empty">まだきろくなし</span>';
+    }
+    return '<div class="best-rec-row">'+
+      '<div class="br-dot" style="background:'+div.color+';"></div>'+
+      '<div class="br-label">'+div.label+'</div>'+
+      inner+'</div>';
+  }).join('');
+
   // Calendar
   const now=new Date(), y=now.getFullYear(), m=now.getMonth();
   document.getElementById('cal-month').textContent=y+'年 '+(m+1)+'月';
@@ -822,19 +960,27 @@ function showRecords(){
     if(ds===td) c.className+=' today';
     cal.appendChild(c);
   }
-  // History
+
+  // History list
   const hl=document.getElementById('history-list');
-  if(!recs.length){ hl.innerHTML='<div class="no-records">まだきろくがないよ！<br>ゲームをしてきろくをつくろう！🌟</div>'; showScreen('screen-records'); return; }
+  if(!recs.length){
+    hl.innerHTML='<div class="no-records">まだきろくがないよ！<br>ゲームをしてきろくをつくろう！🌟</div>';
+    showScreen('screen-records'); return;
+  }
   const sorted=recs.slice().sort((a,b)=>b.ts-a.ts).slice(0,30);
-  const ml=m=>m==='myplace'?'🐢マイペース':'🚀タイムアタック';
+  const modeLabel=m=>m==='myplace'?'🐢マイペース':'🚀タイムアタック';
   const star=r=>r>=100?'🌟':r>=80?'⭐':r>=60?'👍':'';
   hl.innerHTML=sorted.map(r=>{
     const [,mo,da]=r.date.split('-');
     const cl=r.rate>=80?'great':r.rate>=60?'ok':'low';
-    return '<div class="history-item"><div class="hi-date">'+parseInt(mo)+'/'+parseInt(da)+'</div>' +
-      '<div class="hi-body"><div class="hi-mode">'+ml(r.mode)+' ／ '+r.dans+'</div>' +
-      '<div class="hi-rate '+cl+'">'+r.rate+'% せいかい</div>' +
-      '<div class="hi-detail">'+r.correct+'/'+r.total+'もん ・ '+fmtTime(r.time)+'</div></div>' +
+    const divTag=r.taDivision?(' <span style="font-size:0.65rem;background:'+TA_DIVS[r.taDivision].color+'22;color:'+TA_DIVS[r.taDivision].color+';border-radius:5px;padding:1px 5px;font-weight:bold;">'+TA_DIVS[r.taDivision].label+'</span>'):'';
+    return '<div class="history-item">'+
+      '<div class="hi-date">'+parseInt(mo)+'/'+parseInt(da)+'</div>'+
+      '<div class="hi-body">'+
+        '<div class="hi-mode">'+modeLabel(r.mode)+divTag+'</div>'+
+        '<div class="hi-rate '+cl+'">'+r.rate+'% せいかい</div>'+
+        '<div class="hi-detail">'+r.correct+'/'+r.total+'もん ・ '+fmtTime(r.time)+'</div>'+
+      '</div>'+
       '<div class="hi-star">'+star(r.rate)+'</div></div>';
   }).join('');
   showScreen('screen-records');
